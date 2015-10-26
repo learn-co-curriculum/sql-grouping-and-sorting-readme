@@ -104,7 +104,7 @@ ORDER BY column_name ASC|DESC, column_name ASC|DESC;
 
 #### Exercise
 
-Imagine you're working for an important investment firm in Manhattan. The investors are interested in investing in a lucrative and popular cat. They need your help to decide which cat that will be. They want a list of famous and wealthy cats. We can do that with a basic SELECT statement:
+Imagine you're working for an important investment firm in Manhattan. The investors are interested in investing in a lucrative and popular cat. They need your help to decide which cat that will be. They want a list of famous and wealthy cats. We can do that with a basic `SELECT` statement:
 
 ```sql
 SELECT * FROM cats WHERE net_worth > 0;
@@ -172,7 +172,12 @@ GROUP BY column_name;
 Let's calculate the sum of the net worth of all of the cats that belong to our second owner:
 
 ```sql
-SELECT SUM(Cats.net_worth) FROM Owners INNER JOIN cats_owners ON Owners.id = cats_owners.owner_id JOIN Cats ON cats_owners.cat_id = Cats.id WHERE cats_owners.owner_id = 2;
+SELECT SUM(Cats.net_worth) 
+FROM Owners 
+INNER JOIN cats_owners 
+ON Owners.id = cats_owners.owner_id 
+JOIN Cats ON cats_owners.cat_id = Cats.id 
+WHERE cats_owners.owner_id = 2;
 ```
 
 This should return:
@@ -182,3 +187,5 @@ SUM(Cats.net_worth)
 --------------------
 1181600 
 ```
+
+In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at the all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values. 
