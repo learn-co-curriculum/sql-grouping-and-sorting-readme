@@ -1,8 +1,10 @@
-# Grouping and Sorting
+# Grouping and Sorting Data 
 
-1. Understand the utility of grouping and sorting data stored in a database. 
-2. Learn to group and sort data with the `GROUP BY()` and `ORDER BY()` keywords. 
-3. Learn to craft advanced queries using aggregator functions along with sorting keywords and other conditional clauses. 
+## Objectives 
+
+1. Explain the importance of grouping and sorting data stored in a database
+2. Group and sort data with the `GROUP BY()` and `ORDER BY()` keywords
+3. Craft advanced queries using aggregator functions along with sorting keywords and other conditional clauses 
 
 ## Grouping and Sorting Data
 
