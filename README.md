@@ -96,7 +96,7 @@ INSERT INTO cats_owners (cat_id, owner_id) VALUES (1, 2);
 
 #### Syntax
 
-```slq
+```sql
 SELECT column_name, column_name
 FROM table_name
 ORDER BY column_name ASC|DESC, column_name ASC|DESC;
