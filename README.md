@@ -73,7 +73,7 @@ owner_id INTEGER
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (a, "Maru", 3, "Scottish Fold", 1000000);
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (2, "Hana", 1, "Tabby", 21800);
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (3, "Grumpy Cat", 4, "Persian", 181600);
-INSERT INTO cats (id, name, age, breed, net_worth) VALUES (4, "Lil' Bub", 2, "Tortoiseshell", 200000);
+INSERT INTO cats (id, name, age, breed, net_worth) VALUES (4, "Lil' Bub", 2, "Tortoiseshell", 2000000);
 ```
 
 **Owners:**
