@@ -191,3 +191,5 @@ SUM(Cats.net_worth)
 ```
 
 In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at the all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.
+
+<a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
