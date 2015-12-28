@@ -15,10 +15,11 @@ How common is it to order a list of items alphabetically? Or numerically from le
 We can tell our SQL queries and aggregate functions to group and sort our data using a number of clauses:
 
 * `ORDER BY()`
-* `GROUP BY()`
-* `HAVING`
-* `ASC`/`DESC`
 * `LIMIT`
+* `GROUP BY()`
+* `HAVING` and `WHERE`
+* `ASC`/`DESC`
+
 
 Let's take a closer look at how we use these keywords to narrow our search criteria as well as to order and group it.
 
@@ -143,7 +144,7 @@ Hana             1           Tabby          21800
 Nona             4           Tortoiseshell         
 ```
 
-#### The `LIMIT` Keyword
+### Code Along II: The `LIMIT` Keyword
 
 Turns out our investors are very impatient. They don't want to review the list themselves, they just want you to return to them the wealthiest cat. We can accomplish this by using the `LIMIT` keyword with the above query:
 
@@ -156,7 +157,7 @@ Lil' Bub         2           Tortoiseshell  2000000
 
 The LIMIT keyword specifies how many of records that result from the query you'd like to actually return. 
 
-### Code Along VII: `GROUP BY()`
+### Code Along III: `GROUP BY()`
 
 The `GROUP BY()` keyword is very similar to `ORDER BY()`. The only difference is that `ORDER BY()` sorts the resulting data set of basic queries while `GROUP BY()` sorts the result sets of aggregate functions. 
 
@@ -190,6 +191,57 @@ SUM(Cats.net_worth)
 1181600 
 ```
 
-In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at the all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.
+In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at the all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.  
 
+### Code Along IV: `Having` vs `Where` clause<sup>1</sup>  
+Suppose we have a table called employee_bonus as shown below. Note that the table has multiple entries for employees A and B. 
+
+employee_bonus
+
+Employee   | Bonus
+-----------|-------
+Matthew    |1000|
+Abigail    |2000|
+Matthew    |500|
+Tom     	 |700|
+Abigail 	 |1250|  
+
+To calculate the total bonus that each employee received, we would write a SQL statement like this:  
+
+```sql
+SELECT employee, sum(bonus) from employee_bonus group by employee;
+```  
+
+This should return:  
+
+Employee   | Bonus
+-----------|-------
+Matthew    |1500|
+Abigail    |3250|
+Tom        |700|
+
+Now, suppose we wanted to find the employees who received more than $1,000 in bonuses for the year of 2007. You might think that we could write a query like this:  
+
+```sql  
+BAD SQL:
+select employee, sum(bonus) from employee_bonus 
+group by employee where sum(bonus) > 1000;
+```  
+
+Unfortunately the above will not work because the where clause doesn’t work with aggregates – like sum, avg, max, etc. What we need to use is the `HAVING` clause. The having clause was added to sql just so we could compare aggregates to other values – just how the ‘where’ clause can be used with non-aggregates. Now, the correct sql will look like this:
+
+```sql
+GOOD SQL:
+select employee, sum(bonus) from employee_bonus 
+group by employee having sum(bonus) > 1000;
+```  
+
+#### Difference between having and where clause
+The difference between the having and where clause in sql is that the where clause can not be used with aggregates, but the having clause can. One way to think of it is that the having clause is an additional filter to the where clause.  
+
+
+## Resources: 
+1. [Having vs Where clause](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+
+ 
 <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
