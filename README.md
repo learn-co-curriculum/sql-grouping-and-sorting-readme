@@ -244,4 +244,4 @@ The difference between the having and where clause in sql is that the where clau
 1. [Having vs Where clause](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
 
  
-<a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' data-visibility='hidden'>View this lesson on Learn.co</a>
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' title='Grouping and Sorting Data'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
