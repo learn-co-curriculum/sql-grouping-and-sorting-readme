@@ -141,7 +141,6 @@ Lil' Bub         2           Tortoiseshell  2000000
 Maru             3           Scottish Fold  1000000   
 Grumpy Cat       4           Persian        181600    
 Hana             1           Tabby          21800     
-Nona             4           Tortoiseshell         
 ```
 
 ### Code Along II: The `LIMIT` Keyword
@@ -245,3 +244,5 @@ The difference between the having and where clause in sql is that the where clau
 
  
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' title='Grouping and Sorting Data'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
+
+<p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
