@@ -190,7 +190,7 @@ SUM(Cats.net_worth)
 1181600 
 ```
 
-In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at the all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.  
+In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.  
 
 ### Code Along IV: `Having` vs `Where` clause<sup>1</sup>  
 Suppose we have a table called employee_bonus as shown below. Note that the table has multiple entries for employees Abigail and Matthew. 
