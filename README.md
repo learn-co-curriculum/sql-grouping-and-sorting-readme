@@ -25,7 +25,7 @@ Let's take a closer look at how we use these keywords to narrow our search crite
 
 ## Setting up the Database
 
-Some cats are very famous, and accordingly very wealthy. Our Pet's Database will have a Cats table in which each cat has a name, age, breed and net worth. Our database will also have an Owners table and `cats_owners` join table so that a cat can have many owners and an owner can have many cats.
+Some cats are very famous, and accordingly very wealthy. Our Pets Database will have a `cats` table in which each cat has a name, age, breed, and net worth. Our database will also have an `owners` table and `cats_owners` join table so that a cat can have many owners and an owner can have many cats.
 
 **Creating the Database:**
 
@@ -39,7 +39,7 @@ sqlite3 pets_database.db
 
 In the `sqlite3>` prompt in your terminal:
 
-**Cats table:**
+**`cats` table:**
 
 ```sql
 CREATE TABLE cats (
@@ -51,13 +51,13 @@ net_worth INTEGER
 );
 ```
 
-**Owners Table:**
+**`owners` Table:**
 
 ```sql
 CREATE TABLE owners (id INTEGER PRIMARY KEY, name TEXT);
 ```
 
-**Cats Owners Table:**
+**`cats_owners` Table:**
 
 ```sql
 CREATE TABLE cats_owners (
@@ -68,16 +68,16 @@ owner_id INTEGER
 
 **Inserting the values:**
 
-**Cats:**
+**`cats`:**
 
 ```sql
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (1, "Maru", 3, "Scottish Fold", 1000000);
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (2, "Hana", 1, "Tabby", 21800);
 INSERT INTO cats (id, name, age, breed, net_worth) VALUES (3, "Grumpy Cat", 4, "Persian", 181600);
-INSERT INTO cats (id, name, age, breed, net_worth) VALUES (4, "Lil' Bub", 2, "Tortoiseshell", 2000000);
+INSERT INTO cats (id, name, age, breed, net_worth) VALUES (4, "Lil\' Bub", 2, "Tortoiseshell", 2000000);
 ```
 
-**Owners:**
+**`owners`:**
 
 ```sql
 INSERT INTO owners (name) VALUES ("mugumogu");
@@ -85,7 +85,7 @@ INSERT INTO owners (name) VALUES ("Sophie");
 INSERT INTO owners (name) VALUES ("Penny");
 ```
 
-**Cats Owners:**
+**`cats_owners`:**
 
 ```sql
 INSERT INTO cats_owners (cat_id, owner_id) VALUES (3, 2);
@@ -115,13 +115,13 @@ SELECT * FROM cats WHERE net_worth > 0;
 
 This will return:
 
-```
+```bash
 name             age         breed          net_worth 
 ---------------  ----------  -------------  ----------
 Maru             3           Scottish Fold  1000000   
 Hana             1           Tabby          21800     
 Grumpy Cat       4           Persian        181600    
-Lil' Bub         2           Tortoiseshell  2000000   
+Lil\' Bub         2           Tortoiseshell  2000000   
 ```   
 
 Our investors are busy people though. They don't have time to manually sort through this list of cats for the best candidate. They want you to return the list to them with the cats sorted by net worth, from greatest to least.  
@@ -134,10 +134,10 @@ SELECT * FROM cats ORDER BY(net_worth) DESC;
 
 This will return:
 
-```
+```bash
 name             age         breed          net_worth 
 ---------------  ----------  -------------  ----------
-Lil' Bub         2           Tortoiseshell  2000000   
+Lil\' Bub        2           Tortoiseshell  2000000   
 Maru             3           Scottish Fold  1000000   
 Grumpy Cat       4           Persian        181600    
 Hana             1           Tabby          21800     
@@ -149,12 +149,17 @@ Turns out our investors are very impatient. They don't want to review the list t
 
 ```sql
 SELECT * FROM cats ORDER BY(net_worth) DESC LIMIT 1;
-name             age         breed          net_worth 
----------------  ----------  -------------  ----------
-Lil' Bub         2           Tortoiseshell  2000000   
 ```
 
-The LIMIT keyword specifies how many of records that result from the query you'd like to actually return. 
+Which will return:
+
+```bash
+name             age         breed          net_worth 
+---------------  ----------  -------------  ----------
+Lil\' Bub        2           Tortoiseshell  2000000   
+```
+
+The `LIMIT` keyword specifies how many of the records resulting from the query you'd like to actually return.
 
 ### Code Along III: `GROUP BY()`
 
@@ -174,36 +179,36 @@ GROUP BY column_name;
 Let's calculate the sum of the net worth of all of the cats that belong to our second owner:
 
 ```sql
-SELECT SUM(Cats.net_worth) 
-FROM Owners 
-INNER JOIN cats_owners 
-ON Owners.id = cats_owners.owner_id 
-JOIN Cats ON cats_owners.cat_id = Cats.id 
+SELECT SUM(cats.net_worth)
+FROM owners
+INNER JOIN cats_owners
+ON owners.id = cats_owners.owner_id
+JOIN cats ON cats_owners.cat_id = cats.id
 WHERE cats_owners.owner_id = 2;
 ```
 
 This should return:
 
-```
-SUM(Cats.net_worth) 
+```sql
+SUM(cats.net_worth) 
 --------------------
 1181600 
 ```
 
-In the above query, we use the `SUM(Cats.net_worth)` aggregator. `SUM` looks at all of the values in the `net_worth` column of the Cats table (or whatever column you specify in parentheses) and takes the sum of the those values.  
+In the above query, we use the `SUM(cats.net_worth)` aggregator. `SUM` looks at all of the values in the `net_worth` column of the `cats` table (or whichever column you specify in parentheses) and takes the sum of the those values.  
 
-### Code Along IV: `Having` vs `Where` clause<sup>1</sup>  
-Suppose we have a table called employee_bonus as shown below. Note that the table has multiple entries for employees Abigail and Matthew. 
+### Code Along IV: `HAVING` vs `WHERE` clause<sup>1</sup>  
+Suppose we have a table called `employee_bonus` as shown below. Note that the table has multiple entries for employees Abigail and Matthew. 
 
-employee_bonus
+**`employee_bonus`**:
 
 Employee   | Bonus
 -----------|-------
 Matthew    |1000|
 Abigail    |2000|
 Matthew    |500|
-Tom     	 |700|
-Abigail 	 |1250|  
+Tom     	  |700|
+Abigail 	  |1250|  
 
 To calculate the total bonus that each employee received, we would write a SQL statement like this:  
 
@@ -223,26 +228,23 @@ Now, suppose we wanted to find the employees who received more than $1,000 in bo
 
 ```sql  
 BAD SQL:
-select employee, sum(bonus) from employee_bonus 
-group by employee where sum(bonus) > 1000;
+SELECT employee, SUM(bonus) FROM employee_bonus 
+GROUP BY employee WHERE SUM(bonus) > 1000;
 ```  
 
-Unfortunately the above will not work because the where clause doesn’t work with aggregates – like sum, avg, max, etc. What we need to use is the `HAVING` clause. The having clause was added to sql just so we could compare aggregates to other values – just how the ‘where’ clause can be used with non-aggregates. Now, the correct sql will look like this:
+Unfortunately the above will not work because the `WHERE` clause doesn’t work with aggregates – like `SUM`, `AVG`, `MAX`, etc. What we need to use is the `HAVING` clause. The `HAVING` clause was added to SQL so that we could compare aggregates to other values – just how the `WHERE` clause can be used with non-aggregates. Now, the correct SQL will look like this:
 
 ```sql
 GOOD SQL:
-select employee, sum(bonus) from employee_bonus 
-group by employee having sum(bonus) > 1000;
+SELECT employee, SUM(bonus) FROM employee_bonus 
+GROUP BY employee HAVING SUM(bonus) > 1000;
 ```  
 
-#### Difference between having and where clause
-The difference between the having and where clause in sql is that the where clause can not be used with aggregates, but the having clause can. One way to think of it is that the having clause is an additional filter to the where clause.  
+#### Difference between `HAVING` and `WHERE` clause
+The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE` clause can not be used with aggregates but the `HAVING` clause can. One way to think of it is that the `HAVING` clause is an additional filter to the `WHERE` clause.  
 
 
 ## Resources: 
-1. [Having vs Where clause](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+1. [`HAVING` vs `WHERE` clauses](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
 
- 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' title='Grouping and Sorting Data'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
