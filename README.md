@@ -245,6 +245,8 @@ The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE
 
 
 ## Resources: 
-1. [`HAVING` vs `WHERE` clauses](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+* [`HAVING` vs `WHERE` clauses](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+
+* [Video Review- SQL Joins Overview](https://github.com/learn-co-curriculum/sql-joins-review-lectures) 
 
 <p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' title='Grouping and Sorting Data'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
