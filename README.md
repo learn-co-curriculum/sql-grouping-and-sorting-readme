@@ -163,7 +163,7 @@ The `LIMIT` keyword specifies how many of the records resulting from the query y
 
 ### Code Along III: `GROUP BY()`
 
-The `GROUP BY()` keyword is very similar to `ORDER BY()`. The only difference is that `ORDER BY()` sorts the resulting data set of basic queries while `GROUP BY()` sorts the result sets of aggregate functions. 
+The `GROUP BY()` keyword is very similar to `ORDER BY()`. The only difference is that [`ORDER BY()` sorts the resulting data set of basic queries while `GROUP BY()` sorts the result sets of aggregate functions](http://www.thetricky.net/mySQL/GROUP+BY+vs+ORDER+BY). 
 
 #### Syntax
 
@@ -249,4 +249,4 @@ The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE
 
 * [Video Review- SQL Joins Overview](https://www.youtube.com/watch?v=qfB1MRnzk4g) 
 
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme' title='Grouping and Sorting Data'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
+<p class='util--hide'>View <a href='https://learn.co/lessons/sql-grouping-and-sorting-readme'>Grouping and Sorting Data</a> on Learn.co and start learning to code for free.</p>
