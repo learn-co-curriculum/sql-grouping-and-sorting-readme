@@ -213,7 +213,7 @@ Abigail 	  |1250|
 To calculate the total bonus that each employee received, we would write a SQL statement like this:  
 
 ```sql
-SELECT employee, sum(bonus) from employee_bonus group by employee;
+SELECT employee, SUM(bonus) from employee_bonus group by employee;
 ```  
 
 This should return:  
@@ -241,11 +241,29 @@ GROUP BY employee HAVING SUM(bonus) > 1000;
 ```  
 
 #### Difference between `HAVING` and `WHERE` clause
-The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE` clause can not be used with aggregates but the `HAVING` clause can. One way to think of it is that the `HAVING` clause is an additional filter to the `WHERE` clause.  
+The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE` clause can not be used with aggregates but the `HAVING` clause can. HAVING filters out groups of rows, created by 'GROUP BY' and WHERE filters out rows. Another way to think of it is that the `HAVING` clause is an additional filter to the `WHERE` clause. 
 
+- HAVING supports aggregate functions as it has to work with groups of rows. so for example, if there are multiple integers in a group it can filter out the groups with a low average, a high total (sum) or count how many rows are in the group.
+
+- WHERE on the other hand deals with each row individually, so aggregate functions wouldn't work for what would you be aggregating.
+
+
+Also note syntax differences:
+HAVING is __after__ GROUP BY and WHERE is __before__ GROUP BY changing the order will produce a  syntax error.
+```
+SELECT 
+FROM
+JOIN
+  ON
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+LIMIT
+```
 
 ## Resources: 
-* [`HAVING` vs `WHERE` clauses](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+* [`HAVING` vs `WHERE` clauses](https://www.essentialsql.com/what-is-the-difference-between-where-and-having-clauses/)
 
 * [Video Review- SQL Joins Overview](https://www.youtube.com/watch?v=qfB1MRnzk4g) 
 
