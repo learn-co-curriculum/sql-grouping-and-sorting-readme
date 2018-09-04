@@ -245,7 +245,7 @@ The difference between the `HAVING` and `WHERE` clause in SQL is that the `WHERE
 
 
 ## Resources: 
-* [`HAVING` vs `WHERE` clauses](http://www.programmerinterview.com/index.php/database-sql/having-vs-where-clause/)
+* [`HAVING` vs `WHERE` clauses](https://www.essentialsql.com/what-is-the-difference-between-where-and-having-clauses/)
 
 * [Video Review- SQL Joins Overview](https://www.youtube.com/watch?v=qfB1MRnzk4g) 
 
