@@ -97,7 +97,7 @@ INSERT INTO owners (name) VALUES ("Penny");
 **`cats_owners`:**
 
 ```sql
-INSERT INTO cats_owners (cat_id, owner_id) VALUES (3, 2);
+INSERT INTO cats_owners (cat_id, owner_id) VALUES (2, 2);
 INSERT INTO cats_owners (cat_id, owner_id) VALUES (3, 3);
 INSERT INTO cats_owners (cat_id, owner_id) VALUES (1, 2);
 ```
@@ -109,7 +109,7 @@ INSERT INTO cats_owners (cat_id, owner_id) VALUES (1, 2);
 ```sql
 SELECT column_name, column_name
 FROM table_name
-ORDER BY column_name ASC|DESC, column_name ASC|DESC;
+ORDER BY column_name DESC, column_name ASC|DESC;
 ```
 
 `ORDER BY()` will automatically sort the returned values in ascending order. Use
@@ -170,7 +170,7 @@ SELECT * FROM cats ORDER BY(net_worth) DESC LIMIT 1;
 
 Which will return:
 
-```bash
+```text
 name             age         breed          net_worth
 ---------------  ----------  -------------  ----------
 Lil\' Bub        2           Tortoiseshell  2000000
@@ -194,29 +194,66 @@ GROUP BY column_name;
 
 #### Exercise
 
-Let's calculate the sum of the net worth of all of the cats that belong to our
-second owner:
+Let's calculate the sum of the net worth of all of the cats, grouped by owner name:
 
 ```sql
-SELECT SUM(cats.net_worth)
+SELECT owner.name, SUM(cats.net_worth)
 FROM owners
 INNER JOIN cats_owners
 ON owners.id = cats_owners.owner_id
 JOIN cats ON cats_owners.cat_id = cats.id
-WHERE cats_owners.owner_id = 2;
+GROUP BY owners.name;
 ```
 
 This should return:
 
-```sql
-SUM(cats.net_worth)
---------------------
-1181600
+```text
+owners.name      SUM(cats.networth)
+---------------  ----------
+Penny            181600
+Sophie           1021800
 ```
 
-In the above query, we use the `SUM(cats.net_worth)` aggregator. `SUM` looks at
-all of the values in the `net_worth` column of the `cats` table (or whichever
-column you specify in parentheses) and takes the sum of the those values.  
+In the above query, we've implemented _two_ joins. First, we're joining `owners`
+and `cat_owners` on `owners.id = cats_owners.owner_id`. This first joined table
+would look like the following if we were to query it:
+
+```text
+owners.id  owners.name      cat_owners.cat_id  cat_owners.owner_id
+---------  -----------      -----------------  -----------------
+2          Sophie           2                  2
+3          Penny            3                  3
+2          Sophie           1                  2
+```
+
+With this table, we then implement a _second_ join with `cats` on
+`cats_owners.cat_id = cats.id`. To better understand this, try running the
+provided query, but select _everything_ rather than just the owner's name and
+the sum of their cats' net worth, and remove the `GROUP BY` line. You'll be able
+to see all three tables have been joined.
+
+In our example query above, when we use the `SUM(cats.net_worth)` aggregator in
+conjunction with `GROUP BY`, the combination changes the way that our query
+behaves. Without `GROUP BY`, we would get a sum of the net worth of all the
+cats:
+
+```text
+owners.name      SUM(cats.networth)
+---------------  ----------
+Sophie           1203400
+```
+
+By adding `GROUP BY`, we now get the net_worth of all cats _by owner_. In our
+original data, Sophie is the owner of Maru and Hana (100000 + 21800), while
+Penny is the owner of Lil' Bub (181600).
+
+`SUM` looks at all of the values in the `net_worth` column of the `cats`
+table (or whichever column you specify in parentheses) and takes the sum of the
+those values, but only _after those cats have been grouped_.
+
+> **Note**: If you forget to add `SUM` here and just try to get
+> `cats.net_worth`, you'll still group by owner, but it will only display the
+> first cat's net worth, not the aggregate.
 
 ### Code Along IV: `HAVING` vs `WHERE` clause
 
