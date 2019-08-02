@@ -281,8 +281,8 @@ This should return:
 
 Employee   | Bonus
 -----------|-------
-Matthew    |1500|
 Abigail    |3250|
+Matthew    |1500|
 Tom        |700|
 
 Now, suppose we wanted to find the employees who received more than $1,000 in
@@ -295,7 +295,7 @@ SELECT employee, SUM(bonus) FROM employee_bonus
 GROUP BY employee WHERE SUM(bonus) > 1000;
 ```  
 
-Unfortunately the above will not work because the `WHERE` clause doesn’t work
+Unfortunately, the above will not work because the `WHERE` clause doesn’t work
 with aggregates – like `SUM`, `AVG`, `MAX`, etc. What we need to use is the
 `HAVING` clause. The `HAVING` clause was added to SQL so that we could compare
 aggregates to other values – just how the `WHERE` clause can be used with
