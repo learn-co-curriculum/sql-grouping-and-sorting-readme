@@ -197,7 +197,7 @@ GROUP BY column_name;
 Let's calculate the sum of the net worth of all of the cats, grouped by owner name:
 
 ```sql
-SELECT owner.name, SUM(cats.net_worth)
+SELECT owners.name, SUM(cats.net_worth)
 FROM owners
 INNER JOIN cats_owners
 ON owners.id = cats_owners.owner_id
