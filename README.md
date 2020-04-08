@@ -315,7 +315,7 @@ HAVING filters out groups of rows, created by 'GROUP BY' and WHERE filters out
 rows. Another way to think of it is that the `HAVING` clause is an additional
 filter to the `WHERE` clause.
 
-- HAVING supports aggregate functions as it has to work with groups of rows. so
+- HAVING supports aggregate functions as it has to work with groups of rows. So
   for example, if there are multiple integers in a group it can filter out the
   groups with a low average, a high total (sum) or count how many rows are in
   the group.
