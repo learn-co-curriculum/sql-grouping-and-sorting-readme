@@ -244,8 +244,8 @@ Sophie           1203400
 ```
 
 By adding `GROUP BY`, we now get the net_worth of all cats _by owner_. In our
-original data, Sophie is the owner of Maru and Hana (100000 + 21800), while
-Penny is the owner of Lil' Bub (181600).
+original data, Sophie is the owner of Maru and Hana (1000000 + 21800), while
+Penny is the owner of Lil' Bub (2000000).
 
 `SUM` looks at all of the values in the `net_worth` column of the `cats`
 table (or whichever column you specify in parentheses) and takes the sum of the
