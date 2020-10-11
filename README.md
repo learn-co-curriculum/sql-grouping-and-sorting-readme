@@ -240,7 +240,7 @@ cats:
 ```text
 owners.name      SUM(cats.networth)
 ---------------  ----------
-Sophie           1203400
+Sophie           3021800
 ```
 
 By adding `GROUP BY`, we now get the net_worth of all cats _by owner_. In our
