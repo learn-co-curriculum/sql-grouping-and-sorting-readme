@@ -210,7 +210,7 @@ This should return:
 ```text
 owners.name      SUM(cats.networth)
 ---------------  ----------
-Penny            181600
+Penny            2000000
 Sophie           1021800
 ```
 
