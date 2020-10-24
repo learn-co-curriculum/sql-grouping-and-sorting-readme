@@ -38,7 +38,7 @@ cat can have many owners and an owner can have many cats.
 
 **Creating the Database:**
 
-Create the database in your terminal with the following:
+In your terminal, create the database and start `sqlite3` with the following:
 
 ```bash
 sqlite3 pets_database.db
@@ -46,8 +46,7 @@ sqlite3 pets_database.db
 
 **Creating the tables:**
 
-Create the tables by entering the commands below at the `sqlite3>` prompt in your 
-terminal:
+Create the tables by entering the commands below at the `sqlite3>` prompt:
 
 **`cats` table:**
 
@@ -78,7 +77,7 @@ owner_id INTEGER
 
 **Inserting the values:**
 
-Finally, to insert the values, enter the following at the `sqlite3>` prompt:
+Finally, to insert the values, enter the following:
 
 **`cats`:**
 
@@ -118,9 +117,8 @@ ORDER BY column_name ASC, column_name DESC;
 ```
 
 Note that `ORDER BY()` will automatically sort the returned values in 
-ascending order so the use of the `ASC` keyword is optional. However, 
-if we want to sort in descending order instead we need to use 
-the `DESC` keyword.
+ascending order so the use of the `ASC` keyword is optional. If we want 
+to sort in descending order instead, we need to use the `DESC` keyword.
 
 #### Exercise
 
@@ -142,7 +140,7 @@ id           name             age         breed          net_worth
 1            Maru             3           Scottish Fold  1000000
 2            Hana             1           Tabby          21800
 3            Grumpy Cat       4           Persian        181600
-4            Lil\' Bub         2           Tortoiseshell  2000000
+4            Lil\' Bub        2           Tortoiseshell  2000000
 ```
 
 Our investors are busy people though. They don't have time to manually sort
@@ -185,11 +183,15 @@ Lil\' Bub        2           Tortoiseshell  2000000
 ```
 
 The `LIMIT` keyword specifies how many of the records resulting from the query
-you'd like to actually return.
+you'd like to actually return. In this case, because we've sorted the records 
+in descending order by net worth and set the `LIMIT` to 1, the wealthiest cat 
+is returned.
 
 ### Code Along III: `GROUP BY()`
 
-The `GROUP BY()` keyword is very similar to `ORDER BY()`. The main difference is that [`ORDER BY()` sorts sets of data returned by basic queries while `GROUP BY()` sorts sets of data returned by aggregate functions](https://www.geeksforgeeks.org/difference-between-order-by-and-group-by-clause-in-sql/).
+The `GROUP BY()` keyword is very similar to `ORDER BY()`. The main difference is 
+that `ORDER BY()` sorts sets of data returned by basic queries while `GROUP BY()` 
+sorts sets of data returned by aggregate functions.
 
 #### Syntax
 
@@ -222,8 +224,8 @@ Penny            2000000
 Sophie           1021800
 ```
 
-> **Note**: The headers you see in your terminal may differ from the ones 
-> displayed here and below.
+> **Note**: If you have headers turned on, the headers you see in your terminal 
+> may differ from the ones displayed here and below.
 
 In the above query, we've implemented _two_ joins. First, we're joining `owners`
 and `cat_owners` on `owners.id = cats_owners.owner_id`. This first joined table
@@ -243,10 +245,10 @@ provided query, but select _everything_ rather than just the owner's name and
 the sum of their cats' net worth, and remove the `GROUP BY` line. You'll be able
 to see all three tables have been joined.
 
-In our example query above, when we use the `SUM(cats.net_worth)` aggregator in
-conjunction with `GROUP BY`, the combination changes the way that our query
-behaves. Without `GROUP BY`, we would get a sum of the net worth of all the
-cats:
+In our example query above, we need to use the `SUM(cats.net_worth)` aggregator 
+in conjunction with `GROUP BY` to get the information we want. Without `GROUP BY`, 
+only the first owner in the table would be returned, along with the sum of the 
+net worth of _all_ the cats:
 
 ```text
 owners.name      SUM(cats.net_worth)
@@ -254,17 +256,30 @@ owners.name      SUM(cats.net_worth)
 Sophie           3021800
 ```
 
-By adding `GROUP BY`, we now get the net worth of all cats _by owner_. In our
-original data, Sophie is the owner of Maru and Hana (1000000 + 21800), while
-Penny is the owner of Lil' Bub (2000000).
+If, on the other hand, we forget to use `SUM` and just get `cats.net_worth`, 
+the results will be grouped by owner, but only the net worth of the _first_
+cat belonging to each owner will be returned, not the aggregate:
 
-`SUM` looks at all of the values in the `net_worth` column of the `cats`
-table (or whichever column you specify in parentheses) and takes the sum of 
-those values, but only _after those cats have been grouped_.
+```text
+owners.name      cats.net_worth
+---------------  ---------------
+Penny            2000000
+Sophie           21800
+```
+When we use `SUM` and `GROUP BY` together, `SUM` looks at all of the values in 
+the `net_worth` column of the `cats` table (or whichever column you specify in 
+parentheses) and takes the sum of those values, but only _after those cats have 
+been grouped by owner_: 
 
-> **Note**: If you forget to add `SUM` here and just try to get
-> `cats.net_worth`, you'll still group by owner, but it will only display the
-> first cat's net worth, not the aggregate.
+```text
+owners.name      SUM(cats.net_worth)
+---------------  -------------------
+Penny            2000000
+Sophie           1021800
+```
+
+In our original data, Penny is the owner of Lil' Bub (2000000) while Sophie is 
+the owner of Maru and Hana (1000000 + 21800).
 
 ### Code Along IV: `HAVING` vs `WHERE` clause
 
@@ -309,7 +324,7 @@ To calculate the total bonus that each employee received, we would write a SQL
 statement like this:  
 
 ```sql
-SELECT employee, SUM(bonus) from employee_bonus group by employee;
+SELECT employee, SUM(bonus) FROM employee_bonus GROUP BY employee;
 ```  
 
 This should return:  
@@ -348,11 +363,12 @@ GROUP BY employee HAVING SUM(bonus) > 1000;
 The difference between the `HAVING` and `WHERE` clauses in SQL is that the
 `WHERE` clause cannot be used with aggregates while the `HAVING` clause can.
 `HAVING` filters out groups of rows created by `GROUP BY`, and `WHERE` filters 
-out individual rows. 
+out individual rows. Note that there is nothing to stop you from using both 
+of them in the same query.
 
-Also, note that `HAVING` is __after__ `GROUP BY` and `WHERE` is __before__ `GROUP BY`
-as shown below; changing the order will produce a  syntax error. This means that you
-could use the `HAVING` clause as an additional filter to the `WHERE` clause.
+Finally, it is important to remember that order matters here: `WHERE` must 
+come __before__ `GROUP BY` and `HAVING` must come __after__ it, as shown 
+below; changing the order will produce a  syntax error. 
 
 ```sql
 SELECT
@@ -367,6 +383,8 @@ LIMIT
 ```
 
 ## Resources
+
+- [`ORDER BY` vs `GROUP BY` clauses](https://www.geeksforgeeks.org/difference-between-order-by-and-group-by-clause-in-sql/)
 
 - [`HAVING` vs `WHERE` clauses](https://www.essentialsql.com/what-is-the-difference-between-where-and-having-clauses/)
 
