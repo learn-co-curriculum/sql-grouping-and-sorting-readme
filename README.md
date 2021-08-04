@@ -52,11 +52,11 @@ Create the tables by entering the commands below at the `sqlite>` prompt:
 
 ```sql
 CREATE TABLE cats (
-id INTEGER PRIMARY KEY,
-name TEXT,
-age INTEGER,
-breed TEXT,
-net_worth INTEGER
+  id INTEGER PRIMARY KEY,
+  name TEXT,
+  age INTEGER,
+  breed TEXT,
+  net_worth INTEGER
 );
 ```
 
@@ -70,8 +70,8 @@ CREATE TABLE owners (id INTEGER PRIMARY KEY, name TEXT);
 
 ```sql
 CREATE TABLE cats_owners (
-cat_id INTEGER,
-owner_id INTEGER
+  cat_id INTEGER,
+  owner_id INTEGER
 );
 ```
 
@@ -134,7 +134,7 @@ SELECT * FROM cats WHERE net_worth > 0;
 
 This will return:
 
-```bash
+```txt
 id           name             age         breed          net_worth
 -----------  ---------------  ----------  -------------  ----------
 1            Maru             3           Scottish Fold  1000000
@@ -145,7 +145,7 @@ id           name             age         breed          net_worth
 
 Our investors are busy people though. They don't have time to manually sort
 through this list of cats for the best candidate. They want you to return the
-list to them with the cats sorted by net worth, from greatest to least.  
+list to them with the cats sorted by net worth, from greatest to least.
 
 We can do so with the following line:
 
@@ -155,7 +155,7 @@ SELECT * FROM cats ORDER BY(net_worth) DESC;
 
 This will return:
 
-```bash
+```txt
 id           name             age         breed          net_worth
 -----------  ---------------  ----------  -------------  ----------
 4            Lil\' Bub        2           Tortoiseshell  2000000
@@ -176,7 +176,7 @@ SELECT * FROM cats ORDER BY(net_worth) DESC LIMIT 1;
 
 Which will return:
 
-```text
+```txt
 name             age         breed          net_worth
 ---------------  ----------  -------------  ----------
 Lil\' Bub        2           Tortoiseshell  2000000
@@ -217,7 +217,7 @@ GROUP BY owners.name;
 
 This should return:
 
-```text
+```txt
 owners.name      SUM(cats.net_worth)
 ---------------  -------------------
 Penny            2000000
@@ -231,7 +231,7 @@ In the above query, we've implemented _two_ joins. First, we're joining `owners`
 and `cat_owners` on `owners.id = cats_owners.owner_id`. This first joined table
 would look like the following if we were to query it:
 
-```text
+```txt
 owners.id  owners.name      cat_owners.cat_id  cat_owners.owner_id
 ---------  -----------      -----------------  -------------------
 2          Sophie           2                  2
@@ -250,7 +250,7 @@ in conjunction with `GROUP BY` to get the information we want. Without `GROUP BY
 only the first owner in the table would be returned, along with the sum of the
 net worth of _all_ the cats:
 
-```text
+```txt
 owners.name      SUM(cats.net_worth)
 ---------------  -------------------
 Sophie           3021800
@@ -260,7 +260,7 @@ If, on the other hand, we forget to use `SUM` and just get `cats.net_worth`,
 the results will be grouped by owner, but only the net worth of the _first_
 cat belonging to each owner will be returned, not the aggregate:
 
-```text
+```txt
 owners.name      cats.net_worth
 ---------------  ---------------
 Penny            2000000
@@ -272,7 +272,7 @@ the `net_worth` column of the `cats` table (or whichever column you specify in
 parentheses) and takes the sum of those values, but only _after those cats have
 been grouped by owner_:
 
-```text
+```txt
 owners.name      SUM(cats.net_worth)
 ---------------  -------------------
 Penny            2000000
@@ -322,15 +322,15 @@ table has multiple entries for employees Abigail and Matthew.
 </table>
 
 To calculate the total bonus that each employee received, we would write a SQL
-statement like this:  
+statement like this:
 
 ```sql
 SELECT employee, SUM(bonus) FROM employee_bonus GROUP BY employee;
-```  
+```
 
-This should return:  
+This should return:
 
-```text
+```txt
 employee         SUM(bonus)
 ---------------  -------------------
 Abigail          3250
@@ -339,13 +339,13 @@ Tom              700
 ```
 
 Now, suppose we wanted to find the employees who received more than $1,000 in
-bonuses. You might think that we could write a query like this:  
+bonuses. You might think that we could write a query like this:
 
-```sql  
+```sql
 BAD SQL:
 SELECT employee, SUM(bonus) FROM employee_bonus
 GROUP BY employee WHERE SUM(bonus) > 1000;
-```  
+```
 
 Unfortunately, the above will not work because the `WHERE` clause can't be used
 with aggregates (`SUM`, `AVG`, `MAX`, etc). What we need to use is the `HAVING`
@@ -357,7 +357,7 @@ Now, the correct SQL will look like this:
 GOOD SQL:
 SELECT employee, SUM(bonus) FROM employee_bonus
 GROUP BY employee HAVING SUM(bonus) > 1000;
-```  
+```
 
 #### Difference between `HAVING` and `WHERE` clause
 
@@ -368,8 +368,8 @@ out individual rows. Note that there is nothing to stop you from using both
 of them in the same query.
 
 Finally, it is important to remember that order matters here: `WHERE` must
-come __before__ `GROUP BY` and `HAVING` must come __after__ it, as shown
-below; changing the order will produce a  syntax error.
+come **before** `GROUP BY` and `HAVING` must come **after** it, as shown
+below; changing the order will produce a syntax error.
 
 ```sql
 SELECT
@@ -386,7 +386,4 @@ LIMIT
 ## Resources
 
 - [`ORDER BY` vs `GROUP BY` clauses](https://www.geeksforgeeks.org/difference-between-order-by-and-group-by-clause-in-sql/)
-
 - [`HAVING` vs `WHERE` clauses](https://www.essentialsql.com/what-is-the-difference-between-where-and-having-clauses/)
-
-- [Video Review- SQL Joins Overview](https://www.youtube.com/watch?v=qfB1MRnzk4g)
